@@ -71,6 +71,7 @@ public partial class WaveManager : Node2D
 
 	public void UpdateUI()
     {
+		if (waves[waveID] == null) return;
 		int count = waves[waveID].enemies.Count;
 		int left = count - enemiesDefeatedThisWave;
 		waveProgress.SetProgress(waveID, waves.Count, left, count);

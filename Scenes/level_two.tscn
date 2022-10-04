@@ -1529,6 +1529,7 @@ swapSound = ExtResource("10_l3r80")
 stream = ExtResource("8_kobpq")
 
 [node name="WorldTileMap" type="TileMap" parent="."]
+light_mask = 16
 texture_filter = 1
 tile_set = SubResource("TileSet_de7mc")
 format = 2

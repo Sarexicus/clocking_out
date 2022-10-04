@@ -168,13 +168,15 @@ libraries = {
 }
 
 [node name="PointLight2d" type="PointLight2D" parent="."]
-color = Color(0.517647, 0.517647, 0.517647, 1)
-range_z_min = 1024
+visible = false
+range_z_min = 0
+range_item_cull_mask = 16
 shadow_enabled = true
 shadow_filter = 1
 shadow_filter_smooth = 1.0
 texture = ExtResource("7_7jj5j")
 texture_scale = 2.0
+height = 3.0
 
 [node name="Shoes" type="Node2D" parent="."]
 rotation = 0.000936968

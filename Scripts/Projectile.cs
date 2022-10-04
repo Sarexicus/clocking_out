@@ -79,15 +79,16 @@ public partial class Projectile : RigidBody2D
 	public void Explode()
     {
 		CallDeferred("DoExplode");
-    }
+		CallDeferred("Remove");
+	}
 
 	public void DoExplode()
     {
+		if (!IsInsideTree()) return;
 		var prefab = (doExplode) ? explosionPrefabLarge : explosionPrefab;
 		var explosion = prefab.Instantiate() as Explosion;
-		GetTree().Root?.AddChild(explosion);
+		GetTree()?.Root?.AddChild(explosion);
 		explosion.GlobalPosition = GlobalPosition;
 		explosion.CallDeferred("Explode");
-		CallDeferred("Remove");
 	}
 }
