@@ -1,0 +1,93 @@
+[gd_scene load_steps=5 format=3 uid="uid://c22x0d8hux5y5"]
+
+[ext_resource type="Theme" uid="uid://c3ltvuew4unsd" path="res://UI/Theme/default_theme.tres" id="1_i6iap"]
+[ext_resource type="Script" path="res://Scripts/VictoryScreen.cs" id="2_wh0l0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_q1lot"]
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_tqok3"]
+font_size = 24
+
+[node name="VictoryScreen" type="Control" node_paths=PackedStringArray("playButton")]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_i6iap")
+script = ExtResource("2_wh0l0")
+playButton = NodePath("ColorRect/Button")
+firstLevelScenePath = "res://Scenes/MainMenu.tscn"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.298039, 0.454902, 0.392157, 1)
+
+[node name="Label" type="Label" parent="ColorRect"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -311.5
+offset_right = 311.5
+offset_bottom = 135.0
+grow_horizontal = 2
+text = "You win!"
+label_settings = SubResource("LabelSettings_q1lot")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ColorRect"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -317.0
+offset_top = 194.0
+offset_right = 306.0
+offset_bottom = 329.0
+grow_horizontal = 2
+text = "You made it just in time!
+Those enemies really ground your gears.
+But your friend is in another timezone!
+So grab your gear and hurry; time is running out!
+"
+label_settings = SubResource("LabelSettings_tqok3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="ColorRect"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 355.0
+offset_right = 303.0
+offset_bottom = 490.0
+grow_horizontal = 2
+text = "game by Sarexicus
+with music by Sarexicus
+with graphics by Sarexicus
+(this was meant to be a compo game)"
+label_settings = SubResource("LabelSettings_tqok3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="ColorRect"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -61.0
+offset_top = -195.0
+offset_right = 61.0
+offset_bottom = -146.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "menu"

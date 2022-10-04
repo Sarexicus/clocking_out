@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfosf4ppyfakj"]
+
+[ext_resource type="PackedScene" uid="uid://b2dl4xtjsx7qp" path="res://Prefabs/Explosion.tscn" id="1_xgcgt"]
+[ext_resource type="Texture2D" uid="uid://cg45taubporas" path="res://Particles/Explosion.tres" id="2_14kb5"]
+
+[sub_resource type="Curve" id="Curve_81dy5"]
+_data = [Vector2(0, 0.986727), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_yunwh"]
+curve = SubResource("Curve_81dy5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n613f"]
+emission_shape = 1
+emission_sphere_radius = 25.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_max = 50.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 15.0
+scale_max = 25.0
+scale_curve = SubResource("CurveTexture_yunwh")
+color_ramp = ExtResource("2_14kb5")
+
+[node name="ExplosionLarge" instance=ExtResource("1_xgcgt")]
+
+[node name="Particles" parent="." index="0"]
+process_material = SubResource("ParticleProcessMaterial_n613f")
+
+[node name="SoundEffect" parent="." index="1"]
+volume_db = -10.0

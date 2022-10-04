@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://cttkayobmw027"]
+
+[ext_resource type="Theme" uid="uid://cqoogkefgx7i" path="res://UI/Theme/health_bars.tres" id="1_ipt33"]
+
+[node name="HealthBar" type="ProgressBar"]
+texture_filter = 1
+custom_minimum_size = Vector2i(64, 13)
+anchors_preset = -1
+anchor_left = 0.476574
+anchor_top = 0.491536
+anchor_right = 0.523426
+anchor_bottom = 0.508464
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.0
+theme = ExtResource("1_ipt33")
+max_value = 5.0
+value = 5.0

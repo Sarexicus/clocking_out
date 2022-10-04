@@ -1,0 +1,73 @@
+[gd_scene load_steps=12 format=3 uid="uid://ndmlojkewv3r"]
+
+[ext_resource type="Texture2D" uid="uid://scefri25gwbr" path="res://Sprites/particle.png" id="1_7qb6h"]
+[ext_resource type="Texture2D" uid="uid://dvj7dvgv3fdq3" path="res://Sprites/projectile.png" id="1_f4woh"]
+[ext_resource type="Script" path="res://Scripts/Projectile.cs" id="1_h4pyw"]
+[ext_resource type="PackedScene" uid="uid://s3dsvptnj2wl" path="res://Prefabs/ExplosionSmall.tscn" id="2_14wqr"]
+[ext_resource type="PackedScene" uid="uid://cfosf4ppyfakj" path="res://Prefabs/ExplosionLarge.tscn" id="3_gnxr5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_y5x7h"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="Curve" id="Curve_nuu15"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_u4vn6"]
+curve = SubResource("Curve_nuu15")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_thy6o"]
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 12.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 250.0
+initial_velocity_max = 250.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_curve = SubResource("CurveTexture_u4vn6")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b1w7q"]
+radius = 4.0
+height = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0ddpt"]
+radius = 6.0
+
+[node name="Projectile" type="RigidBody2D" node_paths=PackedStringArray("hitbox")]
+collision_layer = 2
+physics_material_override = SubResource("PhysicsMaterial_y5x7h")
+gravity_scale = 0.0
+max_contacts_reported = 99
+contact_monitor = true
+script = ExtResource("1_h4pyw")
+explosionPrefab = ExtResource("2_14wqr")
+explosionPrefabLarge = ExtResource("3_gnxr5")
+hitbox = NodePath("ProjectileHitbox")
+
+[node name="GpuParticles2d" type="GPUParticles2D" parent="."]
+texture_filter = 1
+emitting = false
+amount = 32
+lifetime = 0.25
+draw_order = 0
+trail_sections = 16
+process_material = SubResource("ParticleProcessMaterial_thy6o")
+texture = ExtResource("1_7qb6h")
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CapsuleShape2D_b1w7q")
+
+[node name="Sprite2d" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_f4woh")
+
+[node name="ProjectileHitbox" type="Area2D" parent="."]
+visible = false
+collision_layer = 9
+collision_mask = 13
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="ProjectileHitbox"]
+shape = SubResource("CircleShape2D_0ddpt")

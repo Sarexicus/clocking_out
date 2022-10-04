@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://ox5s1dbgth8g"]
+
+[ext_resource type="Script" path="res://Scripts/GameManager.cs" id="1_xaf8w"]
+[ext_resource type="PackedScene" uid="uid://btxvbf7x662eb" path="res://Scenes/card_order_selector.tscn" id="2_8g7ji"]
+[ext_resource type="PackedScene" uid="uid://c321oy6tjij5v" path="res://Scenes/game_over_screen.tscn" id="3_6dugd"]
+[ext_resource type="PackedScene" uid="uid://b51gw6i6avumw" path="res://Scenes/you_win_screen.tscn" id="4_oldyd"]
+[ext_resource type="AudioStream" uid="uid://yorps2mao87g" path="res://Sound/Music/clocktower1.wav" id="5_bba62"]
+
+[node name="GameManager" type="Node" node_paths=PackedStringArray("waveManager", "cardManager", "player", "musicPlayer", "GUI", "canvas", "deathCamera")]
+script = ExtResource("1_xaf8w")
+waveManager = NodePath("../WaveManager")
+cardManager = NodePath("../CardManager")
+player = NodePath("../Player")
+musicPlayer = NodePath("MusicPlayer")
+GUI = NodePath("../Canvas/GUI")
+canvas = NodePath("../Canvas")
+cardOrderSelectorScene = ExtResource("2_8g7ji")
+gameOverScene = ExtResource("3_6dugd")
+youWinScene = ExtResource("4_oldyd")
+deathCamera = NodePath("Camera2d")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_bba62")
+volume_db = -3.0
+
+[node name="Camera2d" type="Camera2D" parent="."]
+position = Vector2(512, 300)
+zoom = Vector2(1.5, 1.5)

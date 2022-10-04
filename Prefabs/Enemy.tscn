@@ -1,0 +1,109 @@
+[gd_scene load_steps=16 format=3 uid="uid://cwj5ixq2gf0ne"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy.cs" id="1_l8tsu"]
+[ext_resource type="AudioStream" uid="uid://d1f105wgj78se" path="res://Sound/hurt.wav" id="2_e6ybp"]
+[ext_resource type="PackedScene" uid="uid://cttkayobmw027" path="res://Prefabs/HealthBar.tscn" id="2_omg1w"]
+[ext_resource type="PackedScene" uid="uid://b2dl4xtjsx7qp" path="res://Prefabs/Explosion.tscn" id="4_78dvk"]
+[ext_resource type="Texture2D" uid="uid://dv4o1r5twsuqu" path="res://Sprites/GearSprites/enemy_base.png" id="5_xj3hn"]
+[ext_resource type="Texture2D" uid="uid://cjllcb2dv7wdi" path="res://Sprites/GearSprites/enemy_base_1.png" id="6_ew3xn"]
+[ext_resource type="Texture2D" uid="uid://dx3dp7w17beg4" path="res://Sprites/GearSprites/enemy_base_2.png" id="7_2141d"]
+[ext_resource type="Texture2D" uid="uid://dbm7b4ruenggu" path="res://Sprites/enemy_eyes.png" id="7_tv4ss"]
+[ext_resource type="Texture2D" uid="uid://dmw0sqd3yxn8s" path="res://Sprites/GearSprites/enemy_base_3.png" id="8_8576g"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vrxc2"]
+radius = 16.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8x4us"]
+animations = [{
+"frames": [ExtResource("5_xj3hn"), ExtResource("6_ew3xn"), ExtResource("7_2141d"), ExtResource("8_8576g")],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wtb7y"]
+radius = 18.0
+
+[sub_resource type="Curve" id="Curve_pvpkf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_xbwjo"]
+curve = SubResource("Curve_pvpkf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_byd4h"]
+emission_shape = 3
+emission_box_extents = Vector3(16, 16, 1)
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 1.0
+scale_min = 2.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_xbwjo")
+color = Color(1, 0.815833, 0.15, 1)
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("navAgent", "enemyWeapon", "stunTimer", "stunParticles", "eyesSprite", "audioPlayer")]
+light_mask = 2
+rotation = 0.00206956
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_l8tsu")
+navAgent = NodePath("NavigationAgent2d")
+enemyWeapon = NodePath("")
+stunTimer = NodePath("StunTimer")
+stunParticles = NodePath("StunParticles")
+eyesSprite = NodePath("RotatingSprite/EyesSprite")
+maxHealth = 50
+healthBarPrefab = ExtResource("2_omg1w")
+invincibilityFrames = 0
+audioPlayer = NodePath("AudioStreamPlayer2d")
+soundHurt = ExtResource("2_e6ybp")
+explosionPrefab = ExtResource("4_78dvk")
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vrxc2")
+
+[node name="RotatingSprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(0.839216, 0.25098, 0.25098, 1)
+texture_filter = 1
+frames = SubResource("SpriteFrames_8x4us")
+playing = true
+
+[node name="EyesSprite" type="Sprite2D" parent="RotatingSprite"]
+texture = ExtResource("7_tv4ss")
+
+[node name="EnemyHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 5
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="EnemyHitbox"]
+shape = SubResource("CircleShape2D_wtb7y")
+
+[node name="NavigationAgent2d" type="NavigationAgent2D" parent="."]
+target_desired_distance = 64.0
+path_max_distance = 32.0
+radius = 8.0
+neighbor_distance = 8.0
+
+[node name="AudioStreamPlayer2d" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_e6ybp")
+
+[node name="HealthWrapper" type="CenterContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -30.0
+offset_right = 20.0
+offset_bottom = -17.0
+grow_horizontal = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="StunTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="StunParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_byd4h")

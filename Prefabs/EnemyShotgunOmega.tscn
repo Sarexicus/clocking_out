@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://4xv0bovvqx8o"]
+
+[ext_resource type="PackedScene" uid="uid://diegs2v7qhh2s" path="res://Prefabs/EnemyShotgun.tscn" id="1_o1u8k"]
+
+[node name="Enemy" instance=ExtResource("1_o1u8k")]
+
+[node name="RotatingSprite" parent="." index="2"]
+self_modulate = Color(0.45371, 0.2183, 0.59, 1)
+
+[node name="WeaponOrigin" parent="." index="9"]
+reloadTime = 2.0
+spreadRoot = 50.0
+projectileCountRoot = 7
+weaponDamage = 7
+
+[node name="HandL" parent="WeaponOrigin/WeaponKickback/Weapon/HandLOffset/Pump" index="0"]
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(0.45371, 0.2183, 0.59, 1)
+
+[node name="HandR" parent="WeaponOrigin/WeaponKickback/Weapon/HandROffset" index="0"]
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(0.45371, 0.2183, 0.59, 1)

@@ -1,0 +1,302 @@
+[gd_scene load_steps=14 format=3 uid="uid://crk0mn4wxoyh0"]
+
+[ext_resource type="Theme" uid="uid://c3ltvuew4unsd" path="res://UI/Theme/default_theme.tres" id="1_oekdk"]
+[ext_resource type="Texture2D" uid="uid://d1kqagr1mfps2" path="res://UI/ui_9slice.png" id="1_sk4oi"]
+[ext_resource type="Script" path="res://Scripts/WaveProgress.cs" id="3_5jvnw"]
+[ext_resource type="PackedScene" uid="uid://04rooprpocml" path="res://Prefabs/InactiveCard.tscn" id="4_hgp17"]
+[ext_resource type="PackedScene" uid="uid://bg2gjpd2b674g" path="res://Prefabs/ActiveCard.tscn" id="5_trqpc"]
+[ext_resource type="PackedScene" uid="uid://d3ubh4h7pay1j" path="res://Prefabs/ActiveCardNegative.tscn" id="6_5vju8"]
+[ext_resource type="PackedScene" uid="uid://bonse4fbs2d8k" path="res://Prefabs/InactiveCardNegative.tscn" id="7_62o7i"]
+[ext_resource type="Theme" uid="uid://dmg7uhnaattmv" path="res://UI/Theme/card_text.tres" id="8_u5usn"]
+[ext_resource type="Script" path="res://Scripts/Cards/CardDisplayManager.cs" id="9_8t7u6"]
+[ext_resource type="Texture2D" uid="uid://ca6e801goh33a" path="res://Sprites/clock_base.png" id="9_bifu0"]
+[ext_resource type="Texture2D" uid="uid://c07rrpecooxy8" path="res://Sprites/clock_hand.png" id="10_nl336"]
+[ext_resource type="Texture2D" uid="uid://cdfkonulb8iga" path="res://Sprites/clock_top.png" id="11_c3xjs"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_j0fka"]
+font_size = 24
+
+[node name="GUI" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_oekdk")
+
+[node name="LowerLeftUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -173.0
+offset_right = 640.0
+grow_vertical = 0
+
+[node name="WaveProgressControl" type="Control" parent="LowerLeftUI"]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 125.0
+offset_right = 640.0
+offset_bottom = 173.0
+
+[node name="ProgressBar" type="ProgressBar" parent="LowerLeftUI/WaveProgressControl"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_oekdk")
+value = 100.0
+show_percentage = false
+
+[node name="ProgressLabel" type="Label" parent="LowerLeftUI/WaveProgressControl"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -14.5
+offset_right = 192.0
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WaveProgress" type="NinePatchRect" parent="LowerLeftUI/WaveProgressControl" node_paths=PackedStringArray("progress", "label")]
+texture_filter = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("1_sk4oi")
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 24
+script = ExtResource("3_5jvnw")
+progress = NodePath("../ProgressBar")
+label = NodePath("../ProgressLabel")
+
+[node name="PositiveCards" type="HBoxContainer" parent="LowerLeftUI"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -48.5
+offset_right = 294.0
+offset_bottom = 48.5
+grow_vertical = 2
+theme = ExtResource("1_oekdk")
+
+[node name="InactiveCard4" parent="LowerLeftUI/PositiveCards" instance=ExtResource("4_hgp17")]
+offset_left = 0.0
+offset_right = 48.0
+
+[node name="InactiveCard3" parent="LowerLeftUI/PositiveCards" instance=ExtResource("4_hgp17")]
+offset_left = 52.0
+offset_right = 100.0
+
+[node name="InactiveCard2" parent="LowerLeftUI/PositiveCards" instance=ExtResource("4_hgp17")]
+offset_left = 104.0
+offset_right = 152.0
+
+[node name="InactiveCard" parent="LowerLeftUI/PositiveCards" instance=ExtResource("4_hgp17")]
+
+[node name="ActiveCard" parent="LowerLeftUI/PositiveCards" instance=ExtResource("5_trqpc")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 208.0
+offset_top = 0.0
+offset_right = 272.0
+offset_bottom = 97.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="NegativeCards" type="HBoxContainer" parent="LowerLeftUI"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -324.0
+offset_top = -49.0
+offset_bottom = 49.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("1_oekdk")
+alignment = 2
+
+[node name="ActiveCard" parent="LowerLeftUI/NegativeCards" instance=ExtResource("6_5vju8")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 52.0
+offset_top = 0.0
+offset_right = 116.0
+offset_bottom = 98.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="InactiveCard" parent="LowerLeftUI/NegativeCards" instance=ExtResource("7_62o7i")]
+offset_left = 120.0
+offset_right = 168.0
+offset_bottom = 98.0
+
+[node name="InactiveCard2" parent="LowerLeftUI/NegativeCards" instance=ExtResource("7_62o7i")]
+offset_left = 172.0
+offset_right = 220.0
+offset_bottom = 98.0
+
+[node name="InactiveCard3" parent="LowerLeftUI/NegativeCards" instance=ExtResource("7_62o7i")]
+offset_left = 224.0
+offset_right = 272.0
+offset_bottom = 98.0
+
+[node name="InactiveCard4" parent="LowerLeftUI/NegativeCards" instance=ExtResource("7_62o7i")]
+offset_left = 276.0
+offset_right = 324.0
+offset_bottom = 98.0
+
+[node name="PositiveCardEffectContainer" type="VBoxContainer" parent="LowerLeftUI"]
+offset_right = 200.0
+offset_bottom = 32.0
+alignment = 2
+
+[node name="PositiveCardEffectLabel" type="Label" parent="LowerLeftUI/PositiveCardEffectContainer"]
+offset_top = 16.0
+offset_right = 200.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("8_u5usn")
+text = "Projectiles bounce off surfaces"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="PositiveCardEffect" type="ColorRect" parent="LowerLeftUI/PositiveCardEffectContainer/PositiveCardEffectLabel"]
+show_behind_parent = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 4.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.247059, 0.247059, 0.247059, 1)
+
+[node name="NegativeCardEffectContainer" type="VBoxContainer" parent="LowerLeftUI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -204.0
+offset_bottom = 32.0
+grow_horizontal = 0
+alignment = 2
+
+[node name="NegativeCardEffectLabel" type="Label" parent="LowerLeftUI/NegativeCardEffectContainer"]
+offset_top = 16.0
+offset_right = 204.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("8_u5usn")
+text = "-50% weapon damage"
+vertical_alignment = 2
+
+[node name="NegativeCardEffect" type="ColorRect" parent="LowerLeftUI/NegativeCardEffectContainer/NegativeCardEffectLabel"]
+show_behind_parent = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.247059, 0.247059, 0.247059, 1)
+
+[node name="ClockBase" type="TextureRect" parent="LowerLeftUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -54.5
+offset_right = 32.0
+offset_bottom = 9.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_bifu0")
+
+[node name="ClockHand" type="TextureRect" parent="LowerLeftUI/ClockBase"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("10_nl336")
+
+[node name="ClockTopCap" type="TextureRect" parent="LowerLeftUI/ClockBase"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("11_c3xjs")
+
+[node name="CardDisplayManager" type="Node" parent="." node_paths=PackedStringArray("positiveCardRoot", "negativeCardRoot", "positiveLabel", "negativeLabel", "clockHand")]
+script = ExtResource("9_8t7u6")
+positiveCardRoot = NodePath("../LowerLeftUI/PositiveCards")
+negativeCardRoot = NodePath("../LowerLeftUI/NegativeCards")
+positiveLabel = NodePath("../LowerLeftUI/PositiveCardEffectContainer/PositiveCardEffectLabel")
+negativeLabel = NodePath("../LowerLeftUI/NegativeCardEffectContainer/NegativeCardEffectLabel")
+clockHand = NodePath("../LowerLeftUI/ClockBase/ClockHand")
+
+[node name="LowerRightControls" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -292.0
+offset_top = -266.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LowerRightControls"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="LowerRightControls/VBoxContainer"]
+texture_filter = 1
+offset_top = 179.0
+offset_right = 292.0
+offset_bottom = 266.0
+text = "WASD: Move
+Left Shift: Roll
+Left Click: Shoot"
+label_settings = SubResource("LabelSettings_j0fka")
+horizontal_alignment = 2

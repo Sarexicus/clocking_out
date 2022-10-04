@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlsyyheslv4jd"]
+
+[ext_resource type="PackedScene" uid="uid://c0xj3a5a70jr4" path="res://Prefabs/EnemyPistol.tscn" id="1_3cbea"]
+[ext_resource type="AudioStream" uid="uid://b3mrwpbxsekju" path="res://Sound/enemy_shoot_fast.wav" id="2_5c0s1"]
+
+[node name="Enemy" instance=ExtResource("1_3cbea")]
+
+[node name="RotatingSprite" parent="." index="1"]
+self_modulate = Color(0.203922, 0.498039, 0.815686, 1)
+
+[node name="WeaponOrigin" parent="." index="5"]
+soundShoot = ExtResource("2_5c0s1")
+reloadTime = 0.2
+weaponDamage = 5
+
+[node name="Sprite2d2" parent="WeaponOrigin/WeaponKickback/Weapon2/HandLOffset" index="0"]
+self_modulate = Color(0.203922, 0.498039, 0.815686, 1)

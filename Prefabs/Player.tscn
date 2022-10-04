@@ -1,0 +1,306 @@
+[gd_scene load_steps=27 format=3 uid="uid://cjyipkk8gw6e6"]
+
+[ext_resource type="Script" path="res://Scripts/Player.cs" id="1_r74cj"]
+[ext_resource type="PackedScene" uid="uid://cttkayobmw027" path="res://Prefabs/HealthBar.tscn" id="2_krhv1"]
+[ext_resource type="PackedScene" uid="uid://cnhbng88mjd38" path="res://Prefabs/ExplosionPlayer.tscn" id="3_fxvd0"]
+[ext_resource type="AudioStream" uid="uid://cdolyxpijv2cf" path="res://Sound/hurt_player.wav" id="3_o502w"]
+[ext_resource type="AudioStream" uid="uid://cf0bkwxf0w820" path="res://Sound/shoot.wav" id="4_w4eik"]
+[ext_resource type="AudioStream" uid="uid://byu2aiq28w4d1" path="res://Sound/reload.wav" id="5_35l2b"]
+[ext_resource type="AudioStream" uid="uid://dyyufti68aty6" path="res://Sound/reload2.wav" id="6_0hqq5"]
+[ext_resource type="Texture2D" uid="uid://dbrlbj1ht6kgf" path="res://Sprites/player_light.png" id="7_7jj5j"]
+[ext_resource type="Texture2D" uid="uid://bmht5si35msjm" path="res://Sprites/player_shoe.png" id="8_0lbn6"]
+[ext_resource type="Texture2D" uid="uid://cv1johu47dpjs" path="res://Sprites/player.png" id="9_5wip5"]
+[ext_resource type="Script" path="res://Scripts/Weapon.cs" id="10_e6l4i"]
+[ext_resource type="Texture2D" uid="uid://djbk55fvlrkf4" path="res://Sprites/player_eyes.png" id="10_qoies"]
+[ext_resource type="PackedScene" uid="uid://ndmlojkewv3r" path="res://Prefabs/Projectile.tscn" id="11_38i8o"]
+[ext_resource type="Texture2D" uid="uid://kj7r45ktcwob" path="res://Sprites/weapon.png" id="12_juq0d"]
+[ext_resource type="Texture2D" uid="uid://xqvpdvk47k2s" path="res://Sprites/shotgun_pump.png" id="13_1qvsi"]
+[ext_resource type="Texture2D" uid="uid://c5ty0nbovkyyh" path="res://Sprites/player_handL.png" id="13_kqvqm"]
+[ext_resource type="Texture2D" uid="uid://b07swr0plansk" path="res://Sprites/player_hand.png" id="14_1uw5l"]
+
+[sub_resource type="Animation" id="Animation_2oyx3"]
+resource_name = "reload"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WeaponKickback/Weapon/HandLOffset/HandL:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.3, 0.7, 0.9),
+"transitions": PackedFloat32Array(3.73213, 2.2974, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-12, 0), Vector2(0, 0)]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WeaponKickback/Weapon/HandLOffset/AudioStreamPlayer2d")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_w4eik")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_35l2b")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_0hqq5")
+}],
+"times": PackedFloat32Array(0, 0.7, 0.9)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WeaponKickback:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-5, 0.5), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wfa4f"]
+resource_name = "slideAnticlockwise"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../PlayerSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -3.14159, -6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_m45o0"]
+resource_name = "slide"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../PlayerSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 3.14159, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_74geq"]
+_data = {
+"reload": SubResource("Animation_2oyx3"),
+"slideAnticlockwise": SubResource("Animation_wfa4f"),
+"slideClockwise": SubResource("Animation_m45o0")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1y1pd"]
+radius = 16.0
+
+[sub_resource type="Gradient" id="Gradient_vpsdj"]
+offsets = PackedFloat32Array(0.00877193, 0.473684, 1)
+colors = PackedColorArray(1, 1, 0, 1, 1, 0.433333, 0, 1, 1, 0.893967, 0.826469, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3km7j"]
+gradient = SubResource("Gradient_vpsdj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_30hhq"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 58.8
+initial_velocity_max = 58.8
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_max = 5.0
+color_ramp = SubResource("GradientTexture1D_3km7j")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wtb7y"]
+radius = 18.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("shoeL", "shoeR", "playerHitbox", "playerWeapon", "animationPlayer", "playerCamera", "slideTimer", "eyesSprite", "audioPlayer")]
+position = Vector2(512, 368)
+collision_layer = 8
+collision_mask = 9
+script = ExtResource("1_r74cj")
+shoeL = NodePath("Shoes/PlayerShoeL")
+shoeR = NodePath("Shoes/PlayerShoeR")
+playerHitbox = NodePath("PlayerHitbox")
+playerWeapon = NodePath("WeaponOrigin")
+animationPlayer = NodePath("PlayerAnimations")
+playerCamera = NodePath("PlayerCamera")
+slideTimer = NodePath("SlideCooldown")
+eyesSprite = NodePath("PlayerSprite/PlayerEyes")
+maxHealth = 100
+healthBarPrefab = ExtResource("2_krhv1")
+audioPlayer = NodePath("DamageSounds")
+soundHurt = ExtResource("3_o502w")
+explosionPrefab = ExtResource("3_fxvd0")
+
+[node name="SlideCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="DamageSounds" type="AudioStreamPlayer2D" parent="."]
+
+[node name="ReloadAnimation" type="AnimationPlayer" parent="."]
+root_node = NodePath("../WeaponOrigin")
+movie_quit_on_finish = true
+libraries = {
+"": SubResource("AnimationLibrary_74geq")
+}
+
+[node name="PlayerAnimations" type="AnimationPlayer" parent="."]
+root_node = NodePath("../WeaponOrigin")
+movie_quit_on_finish = true
+libraries = {
+"": SubResource("AnimationLibrary_74geq")
+}
+
+[node name="PointLight2d" type="PointLight2D" parent="."]
+color = Color(0.517647, 0.517647, 0.517647, 1)
+range_z_min = 1024
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 1.0
+texture = ExtResource("7_7jj5j")
+texture_scale = 2.0
+
+[node name="Shoes" type="Node2D" parent="."]
+rotation = 0.000936968
+
+[node name="PlayerShoeL" type="Sprite2D" parent="Shoes"]
+light_mask = 2
+texture_filter = 1
+rotation = 0.00572718
+texture = ExtResource("8_0lbn6")
+offset = Vector2(-8, 12)
+
+[node name="PlayerShoeR" type="Sprite2D" parent="Shoes"]
+light_mask = 2
+texture_filter = 1
+texture = ExtResource("8_0lbn6")
+offset = Vector2(10, 12)
+flip_h = true
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1y1pd")
+
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+light_mask = 2
+texture_filter = 1
+texture = ExtResource("9_5wip5")
+
+[node name="PlayerEyes" type="Sprite2D" parent="PlayerSprite"]
+light_mask = 2
+texture = ExtResource("10_qoies")
+
+[node name="WeaponOrigin" type="Node2D" parent="." node_paths=PackedStringArray("weaponSprite", "bulletSpawnPosition", "muzzleFlashParticles", "handLSprite", "handRSprite", "handLOffset", "handROffset", "reloadTimer", "reloadAnimation", "audioPlayer")]
+script = ExtResource("10_e6l4i")
+weaponSprite = NodePath("WeaponKickback/Weapon")
+bulletSpawnPosition = NodePath("WeaponKickback/Weapon/SpawnPosition")
+muzzleFlashParticles = NodePath("WeaponKickback/Weapon/SpawnPosition/MuzzleFlash")
+handLSprite = NodePath("WeaponKickback/Weapon/HandLOffset/HandL")
+handRSprite = NodePath("WeaponKickback/Weapon/HandROffset/HandR")
+handLOffset = NodePath("WeaponKickback/Weapon/HandLOffset")
+handROffset = NodePath("WeaponKickback/Weapon/HandROffset")
+useRightHand = true
+reloadTimer = NodePath("ReloadTimer")
+reloadAnimation = NodePath("../ReloadAnimation")
+audioPlayer = NodePath("WeaponKickback/Weapon/HandLOffset/AudioStreamPlayer2d")
+isEnemy = false
+bulletPrefab = ExtResource("11_38i8o")
+soundReload1 = ExtResource("5_35l2b")
+soundReload2 = ExtResource("6_0hqq5")
+soundShoot = ExtResource("4_w4eik")
+reloadTime = 1.0
+spreadRoot = 20.0
+projectileCountRoot = 3
+
+[node name="WeaponKickback" type="Node2D" parent="WeaponOrigin"]
+
+[node name="Weapon" type="Sprite2D" parent="WeaponOrigin/WeaponKickback"]
+light_mask = 2
+texture_filter = 1
+texture = ExtResource("12_juq0d")
+offset = Vector2(32, 0)
+
+[node name="SpawnPosition" type="Node2D" parent="WeaponOrigin/WeaponKickback/Weapon"]
+position = Vector2(54, 0)
+
+[node name="MuzzleFlash" type="GPUParticles2D" parent="WeaponOrigin/WeaponKickback/Weapon/SpawnPosition"]
+emitting = false
+amount = 16
+lifetime = 0.25
+one_shot = true
+explosiveness = 0.5
+randomness = 0.5
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_30hhq")
+
+[node name="HandLOffset" type="Node2D" parent="WeaponOrigin/WeaponKickback/Weapon"]
+position = Vector2(42, 4)
+
+[node name="HandL" type="Sprite2D" parent="WeaponOrigin/WeaponKickback/Weapon/HandLOffset"]
+light_mask = 2
+texture_filter = 1
+texture = ExtResource("13_1qvsi")
+
+[node name="HandL2" type="Sprite2D" parent="WeaponOrigin/WeaponKickback/Weapon/HandLOffset/HandL"]
+light_mask = 2
+texture_filter = 1
+texture = ExtResource("13_kqvqm")
+
+[node name="AudioStreamPlayer2d" type="AudioStreamPlayer2D" parent="WeaponOrigin/WeaponKickback/Weapon/HandLOffset"]
+position = Vector2(-42, -4)
+stream = ExtResource("6_0hqq5")
+
+[node name="HandROffset" type="Node2D" parent="WeaponOrigin/WeaponKickback/Weapon"]
+position = Vector2(14, 8)
+
+[node name="HandR" type="Sprite2D" parent="WeaponOrigin/WeaponKickback/Weapon/HandROffset"]
+light_mask = 2
+texture_filter = 1
+rotation = -4.02298
+texture = ExtResource("14_1uw5l")
+
+[node name="ReloadTimer" type="Timer" parent="WeaponOrigin"]
+wait_time = 0.75
+
+[node name="PlayerHitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 9
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="PlayerHitbox"]
+shape = SubResource("CircleShape2D_wtb7y")
+
+[node name="PlayerCamera" type="Camera2D" parent="."]
+current = true
+zoom = Vector2(1.5, 1.5)
+smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+editor_draw_drag_margin = true
+
+[node name="HealthWrapper" type="CenterContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -30.0
+offset_right = 20.0
+offset_bottom = -17.0
+grow_horizontal = 2
+metadata/_edit_use_anchors_ = true
+
+[connection signal="timeout" from="SlideCooldown" to="." method="ResetSlide"]

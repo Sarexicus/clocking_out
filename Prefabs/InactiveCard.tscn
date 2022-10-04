@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://04rooprpocml"]
+
+[ext_resource type="Texture2D" uid="uid://b43q5xeh8egx2" path="res://UI/positive_card_disabled.png" id="1_njdoy"]
+[ext_resource type="Script" path="res://Scripts/Cards/CardDisplay.cs" id="2_go0x2"]
+[ext_resource type="Texture2D" uid="uid://bfnanwjq1nb6u" path="res://Sprites/CardIcons/CardBonusProjectiles.png" id="3_beami"]
+
+[node name="InactiveCard" type="TextureRect" node_paths=PackedStringArray("cardIcon")]
+texture_filter = 1
+offset_left = 156.0
+offset_right = 204.0
+offset_bottom = 97.0
+texture = ExtResource("1_njdoy")
+stretch_mode = 2
+script = ExtResource("2_go0x2")
+cardIcon = NodePath("TextureRect")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.454902, 0.596078, 0.462745, 1)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("3_beami")

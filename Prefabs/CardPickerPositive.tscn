@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxwo6vvpj2efi"]
+
+[ext_resource type="PackedScene" uid="uid://cvabb80vbvmnb" path="res://Prefabs/CardPicker.tscn" id="1_sp5eb"]
+[ext_resource type="Texture2D" uid="uid://w1fjw84tyhhm" path="res://UI/positive_card.png" id="2_0ydsa"]
+[ext_resource type="Texture2D" uid="uid://bfnanwjq1nb6u" path="res://Sprites/CardIcons/CardBonusProjectiles.png" id="3_hu2dc"]
+
+[node name="CardPicker" instance=ExtResource("1_sp5eb")]
+isPositive = true
+
+[node name="CardDisplay" parent="." index="0"]
+texture = ExtResource("2_0ydsa")
+
+[node name="CardIcon" parent="CardDisplay" index="0"]
+texture = ExtResource("3_hu2dc")
+
+[editable path="CardDisplay"]

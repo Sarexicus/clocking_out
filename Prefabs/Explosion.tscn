@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://b2dl4xtjsx7qp"]
+
+[ext_resource type="Script" path="res://Scripts/Explosion.cs" id="1_7rvvd"]
+[ext_resource type="AudioStream" uid="uid://bng67sdfewkym" path="res://Sound/death_enemy.wav" id="2_f4nxb"]
+[ext_resource type="Texture2D" uid="uid://cg45taubporas" path="res://Particles/Explosion.tres" id="3_xjgyl"]
+
+[sub_resource type="Curve" id="Curve_81dy5"]
+_data = [Vector2(0, 0.986727), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_yunwh"]
+curve = SubResource("Curve_81dy5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rk2po"]
+emission_shape = 1
+emission_sphere_radius = 15.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_max = 50.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 15.0
+scale_max = 25.0
+scale_curve = SubResource("CurveTexture_yunwh")
+color_ramp = ExtResource("3_xjgyl")
+
+[node name="Explosion" type="Node2D" node_paths=PackedStringArray("particles", "audioPlayer", "despawnTimer")]
+script = ExtResource("1_7rvvd")
+particles = NodePath("Particles")
+audioPlayer = NodePath("SoundEffect")
+audioStream = ExtResource("2_f4nxb")
+despawnTimer = NodePath("DespawnTimer")
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 100
+lifetime = 0.25
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_rk2po")
+
+[node name="SoundEffect" type="AudioStreamPlayer2D" parent="."]
+volume_db = -2.0
+attenuation = 2.07053
+
+[node name="DespawnTimer" type="Timer" parent="."]

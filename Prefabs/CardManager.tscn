@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxjvgoaxu6p3c"]
+
+[ext_resource type="Script" path="res://Scripts/Cards/CardManager.cs" id="1_qop0n"]
+[ext_resource type="AudioStream" uid="uid://dc436bfgk71rq" path="res://Sound/tick_tock.wav" id="2_moas5"]
+[ext_resource type="AudioStream" uid="uid://xradveqfqxq7" path="res://Sound/time_warning.wav" id="3_fi3yu"]
+[ext_resource type="AudioStream" uid="uid://cmv0326pqbbjn" path="res://Sound/swap.wav" id="4_ccwae"]
+
+[node name="CardManager" type="Node" node_paths=PackedStringArray("GUI", "secondsTimer", "audioPlayer")]
+script = ExtResource("1_qop0n")
+GUI = NodePath("../Canvas/GUI")
+secondsTimer = NodePath("SecondTimer")
+audioPlayer = NodePath("Ticker")
+tickSound = ExtResource("2_moas5")
+warningSound = ExtResource("3_fi3yu")
+swapSound = ExtResource("4_ccwae")
+
+[node name="SecondTimer" type="Timer" parent="."]
+
+[node name="Ticker" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_moas5")

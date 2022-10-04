@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnhbng88mjd38"]
+
+[ext_resource type="PackedScene" uid="uid://b2dl4xtjsx7qp" path="res://Prefabs/Explosion.tscn" id="1_iphq4"]
+[ext_resource type="AudioStream" uid="uid://pk87030bitug" path="res://Sound/death_player_echo.wav" id="2_arim5"]
+
+[node name="Explosion" instance=ExtResource("1_iphq4")]
+audioStream = ExtResource("2_arim5")
+
+[node name="Particles" parent="." index="0"]
+lifetime = 2.0

@@ -1,0 +1,81 @@
+[gd_scene load_steps=11 format=3 uid="uid://c0xj3a5a70jr4"]
+
+[ext_resource type="PackedScene" uid="uid://cwj5ixq2gf0ne" path="res://Prefabs/Enemy.tscn" id="1_icq51"]
+[ext_resource type="Script" path="res://Scripts/Weapon.cs" id="2_aquya"]
+[ext_resource type="PackedScene" uid="uid://ndmlojkewv3r" path="res://Prefabs/Projectile.tscn" id="3_b1guu"]
+[ext_resource type="Texture2D" uid="uid://n7d8gxpntns6" path="res://Sprites/weapon2.png" id="4_7o7ia"]
+[ext_resource type="AudioStream" uid="uid://c7u4cy6334hxj" path="res://Sound/enemy_shoot.wav" id="4_dg77n"]
+[ext_resource type="AudioStream" uid="uid://dyyufti68aty6" path="res://Sound/reload2.wav" id="5_kcy4y"]
+[ext_resource type="Texture2D" uid="uid://c54jeiacnqv5b" path="res://Sprites/GearSprites/gear_handL_flip.png" id="6_x7ynq"]
+
+[sub_resource type="Gradient" id="Gradient_n7swm"]
+offsets = PackedFloat32Array(0.00877193, 0.473684, 1)
+colors = PackedColorArray(1, 1, 0, 1, 1, 0.433333, 0, 1, 1, 0.893967, 0.826469, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_m5ai3"]
+gradient = SubResource("Gradient_n7swm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0e4hf"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 58.8
+initial_velocity_max = 58.8
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_max = 5.0
+color_ramp = SubResource("GradientTexture1D_m5ai3")
+
+[node name="Enemy" node_paths=PackedStringArray("enemyWeapon") instance=ExtResource("1_icq51")]
+enemyWeapon = NodePath("WeaponOrigin")
+maxHealth = 40
+
+[node name="WeaponOrigin" type="Node2D" parent="." index="5" node_paths=PackedStringArray("weaponSprite", "bulletSpawnPosition", "muzzleFlashParticles", "handLSprite", "handLOffset", "reloadTimer", "audioPlayer")]
+script = ExtResource("2_aquya")
+weaponSprite = NodePath("WeaponKickback/Weapon2")
+bulletSpawnPosition = NodePath("WeaponKickback/Weapon2/SpawnPosition")
+muzzleFlashParticles = NodePath("WeaponKickback/Weapon2/SpawnPosition/MuzzleFlash")
+handLSprite = NodePath("WeaponKickback/Weapon2/HandLOffset/Sprite2d2")
+handLOffset = NodePath("WeaponKickback/Weapon2/HandLOffset")
+reloadTimer = NodePath("ReloadTimer")
+audioPlayer = NodePath("WeaponKickback/Weapon2/SpawnPosition/AudioStreamPlayer2d")
+bulletPrefab = ExtResource("3_b1guu")
+soundShoot = ExtResource("4_dg77n")
+reloadTime = 1.0
+
+[node name="WeaponKickback" type="Node2D" parent="WeaponOrigin" index="0"]
+
+[node name="Weapon2" type="Sprite2D" parent="WeaponOrigin/WeaponKickback" index="0"]
+texture_filter = 1
+position = Vector2(22.0062, 2.95446)
+texture = ExtResource("4_7o7ia")
+
+[node name="SpawnPosition" type="Node2D" parent="WeaponOrigin/WeaponKickback/Weapon2" index="0"]
+position = Vector2(31.9938, -2.95446)
+
+[node name="MuzzleFlash" type="GPUParticles2D" parent="WeaponOrigin/WeaponKickback/Weapon2/SpawnPosition" index="0"]
+position = Vector2(-20.998, 0.931702)
+emitting = false
+amount = 16
+lifetime = 0.25
+one_shot = true
+explosiveness = 0.5
+randomness = 0.5
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_0e4hf")
+
+[node name="AudioStreamPlayer2d" type="AudioStreamPlayer2D" parent="WeaponOrigin/WeaponKickback/Weapon2/SpawnPosition" index="1"]
+position = Vector2(-20.9959, 1.93168)
+stream = ExtResource("5_kcy4y")
+
+[node name="HandLOffset" type="Node2D" parent="WeaponOrigin/WeaponKickback/Weapon2" index="1"]
+position = Vector2(-7, 7)
+
+[node name="Sprite2d2" type="Sprite2D" parent="WeaponOrigin/WeaponKickback/Weapon2/HandLOffset" index="0"]
+self_modulate = Color(0.839216, 0.25098, 0.25098, 1)
+texture_filter = 1
+texture = ExtResource("6_x7ynq")
+
+[node name="ReloadTimer" type="Timer" parent="WeaponOrigin" index="1"]
+wait_time = 0.75
