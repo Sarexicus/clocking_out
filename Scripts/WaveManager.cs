@@ -79,10 +79,12 @@ public partial class WaveManager : Node2D
 
 	public bool FindFreeSpawnSpace(out SpawnLocation space)
     {
+		float spawnDistanceThreshold = 250f;
+
 		spawnLocations.Shuffle();
 		foreach (SpawnLocation node in spawnLocations)
         {
-			if(!node.IsEnemyNearby() && node.GlobalPosition.DistanceTo(player.GlobalPosition) < 1000f)
+			if(!node.IsEnemyNearby() && node.GlobalPosition.DistanceTo(player.GlobalPosition) > spawnDistanceThreshold)
             {
 				space = node;
 				return true;

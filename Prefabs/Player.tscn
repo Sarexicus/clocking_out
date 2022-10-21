@@ -148,6 +148,15 @@ audioPlayer = NodePath("DamageSounds")
 soundHurt = ExtResource("3_o502w")
 explosionPrefab = ExtResource("3_fxvd0")
 
+[node name="PlayerCamera" type="Camera2D" parent="."]
+current = true
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+editor_draw_drag_margin = true
+
 [node name="SlideCooldown" type="Timer" parent="."]
 one_shot = true
 
@@ -167,8 +176,7 @@ libraries = {
 "": SubResource("AnimationLibrary_74geq")
 }
 
-[node name="PointLight2d" type="PointLight2D" parent="."]
-visible = false
+[node name="PlayerLight" type="PointLight2D" parent="."]
 range_z_min = 0
 range_item_cull_mask = 16
 shadow_enabled = true
@@ -285,14 +293,6 @@ collision_mask = 9
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="PlayerHitbox"]
 shape = SubResource("CircleShape2D_wtb7y")
-
-[node name="PlayerCamera" type="Camera2D" parent="."]
-current = true
-zoom = Vector2(1.5, 1.5)
-smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-editor_draw_drag_margin = true
 
 [node name="HealthWrapper" type="CenterContainer" parent="."]
 anchors_preset = 5

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b2dl4xtjsx7qp"]
+[gd_scene load_steps=8 format=3 uid="uid://b2dl4xtjsx7qp"]
 
 [ext_resource type="Script" path="res://Scripts/Explosion.cs" id="1_7rvvd"]
 [ext_resource type="AudioStream" uid="uid://bng67sdfewkym" path="res://Sound/death_enemy.wav" id="2_f4nxb"]
@@ -25,6 +25,9 @@ scale_max = 25.0
 scale_curve = SubResource("CurveTexture_yunwh")
 color_ramp = ExtResource("3_xjgyl")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_2ysp3"]
+radius = 32.0
+
 [node name="Explosion" type="Node2D" node_paths=PackedStringArray("particles", "audioPlayer", "despawnTimer")]
 script = ExtResource("1_7rvvd")
 particles = NodePath("Particles")
@@ -44,3 +47,8 @@ volume_db = -2.0
 attenuation = 2.07053
 
 [node name="DespawnTimer" type="Timer" parent="."]
+
+[node name="ExplosionHitbox" type="Area2D" parent="."]
+
+[node name="ExplosionShape" type="CollisionShape2D" parent="ExplosionHitbox"]
+shape = SubResource("CircleShape2D_2ysp3")

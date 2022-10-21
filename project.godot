@@ -17,6 +17,11 @@ config/features=PackedStringArray("4.0", "C#", "Forward Plus")
 boot_splash/show_image=false
 config/icon="res://Sprites/logo.png"
 
+[autoload]
+
+GlobalEffects="*res://Scripts/GlobalEffects.cs"
+DiscordIntegration="*res://Scripts/DiscordIntegration.cs"
+
 [display]
 
 window/size/viewport_width=1366

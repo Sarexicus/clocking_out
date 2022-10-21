@@ -5,15 +5,15 @@ public partial class HealthObject : CharacterBody2D
 {
     [ExportGroup("Health")]
 	[Export] public int maxHealth;
-	[Export] public PackedScene healthBarPrefab;
-    public int health;
+	[Export] PackedScene healthBarPrefab;
+	public int health;
+	public HealthBar healthBar;
 
 	[Export] public int invincibilityFrames = 5;
 	public int remainingInvincibilityFrames;
 
 	public float damageTakenMultiplier = 1f;
 
-	public ProgressBar healthBar;
 
 	bool isDead = false;
 	bool isInit = false;
@@ -32,9 +32,10 @@ public partial class HealthObject : CharacterBody2D
 	public override void _Ready()
 	{
 		health = maxHealth;
-		healthBar = healthBarPrefab.Instantiate() as ProgressBar;
+		healthBar = healthBarPrefab.Instantiate() as HealthBar;
 		healthBar.Position = new Vector2(-32, -28);
-		healthBar.Value = healthBar.MaxValue = maxHealth;
+		healthBar.SetHealth(maxHealth, true);
+		healthBar.SetMaxHealth(maxHealth, true);
 		FindChild("HealthWrapper", true, false).CallDeferred("add_child", healthBar);
 
 		remainingInvincibilityFrames = 0;
@@ -45,8 +46,6 @@ public partial class HealthObject : CharacterBody2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		healthBar.Value = Mathf.MoveToward((float)healthBar.Value, health, 2);
-
 		if (remainingInvincibilityFrames > 0)
 		{
 			remainingInvincibilityFrames--;
@@ -74,7 +73,7 @@ public partial class HealthObject : CharacterBody2D
 	private void Explode()
     {
 		var explosion = explosionPrefab.Instantiate() as Explosion;
-		CallDeferred("AddExplosion", explosion);
+		CallDeferred(nameof(AddExplosion), explosion);
 	}
 
 	private void CheckHealth()
@@ -86,6 +85,13 @@ public partial class HealthObject : CharacterBody2D
 			Explode();
 		}
     }
+
+	void UpdateHealth()
+    {
+		healthBar.SetHealth(health);
+		healthBar.SetMaxHealth(maxHealth);
+		CheckHealth();
+	}
 
 	public void Damage(int delta)
     {
@@ -106,6 +112,6 @@ public partial class HealthObject : CharacterBody2D
 			audioPlayer.Stream = soundHurt;
 			audioPlayer.Play();
         }
-		CheckHealth();
+		UpdateHealth();
     }
 }

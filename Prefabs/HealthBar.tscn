@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cttkayobmw027"]
+[gd_scene load_steps=3 format=3 uid="uid://cttkayobmw027"]
 
 [ext_resource type="Theme" uid="uid://cqoogkefgx7i" path="res://UI/Theme/health_bars.tres" id="1_ipt33"]
+[ext_resource type="Script" path="res://Scripts/HealthBar.cs" id="2_38153"]
 
-[node name="HealthBar" type="ProgressBar"]
+[node name="HealthBar" type="ProgressBar" node_paths=PackedStringArray("valueLabel")]
 texture_filter = 1
 custom_minimum_size = Vector2i(64, 13)
 anchors_preset = -1
@@ -17,3 +18,17 @@ size_flags_stretch_ratio = 0.0
 theme = ExtResource("1_ipt33")
 max_value = 5.0
 value = 5.0
+show_percentage = false
+script = ExtResource("2_38153")
+valueLabel = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1000/1000"
+horizontal_alignment = 1
+vertical_alignment = 1

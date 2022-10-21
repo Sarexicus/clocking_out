@@ -18,6 +18,7 @@ public partial class Player : EyesCharacter
 	[Export] Timer slideTimer;
 	public bool canSlide = true;
 
+	public float speedMultiplier = 1f;
 	public bool canMove = false; 
 
     public override void _Ready()
@@ -26,12 +27,12 @@ public partial class Player : EyesCharacter
 		OnDeath += Death;
 	}
 
-	public void Death() => CallDeferred("DetachCamera");
+	public void Death() => CallDeferred(nameof(DetachCamera));
 
 	public void DetachCamera()
 	{
 		RemoveChild(playerCamera);
-		playerCamera.SmoothingEnabled = false;
+		playerCamera.PositionSmoothingEnabled = false;
 		playerCamera.GlobalPosition = GlobalPosition;
 		GetTree().Root.AddChild(playerCamera);
     }
@@ -92,7 +93,7 @@ public partial class Player : EyesCharacter
 
 		if (motion != Vector2.Zero) lastDirection = motion;
 
-		Velocity = motion.Normalized() * m_speed + slideVelocity;
+		Velocity = (motion.Normalized() * m_speed + slideVelocity) * speedMultiplier;
 		if (slideVelocity.Length() > 5)
 		{
 			slideVelocity *= 0.9f;
